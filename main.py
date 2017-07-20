@@ -22,23 +22,23 @@ def load_csv(filename):
 
 
 def update_list(songname, playlist_dict):
-    with open('playlist.csv', 'w') as f:
+    with open('/opt/mindful/playlist.csv', 'w') as f:
         for song in playlist_dict:
             if song == songname:
                 played = True
             else:
                 played = playlist_dict[song]
             f.write("%s,%s\n" % (song, str(played)))
-    with open('mindful.log', 'a') as f:
+    with open('/opt/mindful/mindful.log', 'a') as f:
         f.write("Played %s\n" % songname)
 
 
 def load_playlist():
-    return load_csv('playlist.csv')
+    return load_csv('/opt/mindful/playlist.csv')
 
 
 def play_mindful():
-    songname = "mindful.mp3"
+    songname = "/opt/mindful/mindful.mp3"
     print("Playing %s" % songname)
     play_mp3(songname)
 
@@ -69,13 +69,13 @@ def select_song(playlist_dict):
 
 
 def play_song(songname):
-    songname = "song.mkv"
+    songname = "/opt/mindful/song.mkv"
     return play_mp3(songname)
 
 
 def download_song(songname):
     local_song = "song"
-    os.system("youtube-dl %s -o %s" % (songname, local_song))
+    os.system("youtube-dl %s -o /opt/mindful/%s" % (songname, local_song))
 
 
 def main():
@@ -87,7 +87,7 @@ def main():
     if song is not None:
         played = True  # play_song(song)
         if played:
-            os.remove("song.mkv")
+            os.remove("/opt/mindful/song.mkv")
             update_list(song, playlist_dict)
 
 
